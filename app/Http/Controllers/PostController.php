@@ -10,12 +10,19 @@ class PostController extends Controller
 {
     public function index()
     {
-        return view('posts.index');
+        $posts = Post::latest()->get();
+
+        return view('posts.index', compact('posts'));
     }
 
-    public function show()
+    //public function show($id)
+    public function show(Post $post)
     {
-        return view('posts.show');
+        //$post = Post::find($id);
+
+        // wildcard binding is without above line ^
+
+        return view('posts.show', compact('post'));
     }
 
     public function create()
@@ -34,6 +41,7 @@ class PostController extends Controller
         // $post->body = request('body');
         //
         // $post->save();
+
         $this->validate(request(), [
           "title" => 'required',
           "body" => 'required'
